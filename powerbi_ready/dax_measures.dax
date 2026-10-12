@@ -1,0 +1,142 @@
+// =============================================================================
+// INDIAN CITIES WEATHER ANALYTICS — COMPLETE DAX MEASURES
+// =============================================================================
+// Create a blank table named '_Measures' in Power BI:
+//   Home > Enter Data > Set Table Name to '_Measures' > Load
+//   Then delete the default Column1.
+//
+// For each measure below:
+//   Select '_Measures' table > Modeling > New Measure > Paste the formula.
+// =============================================================================
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// TEMPERATURE MEASURES
+// ═══════════════════════════════════════════════════════════════════════
+
+// Measure Name: Average Temperature
+Average Temperature = 
+AVERAGE(City_Monthly[avg_temperature])
+
+// Measure Name: Maximum Temperature
+Maximum Temperature = 
+MAX(City_Temperature[max_temperature])
+
+// Measure Name: Minimum Temperature
+Minimum Temperature = 
+MIN(City_Temperature[min_temperature])
+
+// Measure Name: Temperature Range
+Temperature Range = 
+[Maximum Temperature] - [Minimum Temperature]
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// RAINFALL & PRECIPITATION MEASURES
+// ═══════════════════════════════════════════════════════════════════════
+
+// Measure Name: Total Rainfall
+Total Rainfall = 
+SUM(City_Monthly[total_precipitation])
+
+// Measure Name: Average Monthly Rainfall
+Average Monthly Rainfall = 
+AVERAGE(City_Monthly[total_precipitation])
+
+// Measure Name: Monsoon Rainfall
+Monsoon Rainfall = 
+CALCULATE(
+    [Total Rainfall],
+    Dim_Date[Season] = "Monsoon"
+)
+
+// Measure Name: Monsoon Contribution %
+Monsoon Contribution % = 
+DIVIDE([Monsoon Rainfall], [Total Rainfall], 0)
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// HUMIDITY MEASURES
+// ═══════════════════════════════════════════════════════════════════════
+
+// Measure Name: Average Humidity
+Average Humidity = 
+AVERAGE(City_Monthly[avg_humidity])
+
+// Measure Name: Maximum Humidity
+Maximum Humidity = 
+MAX(City_Humidity[max_humidity])
+
+// Measure Name: Minimum Humidity
+Minimum Humidity = 
+MIN(City_Humidity[min_humidity])
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// WIND MEASURES
+// ═══════════════════════════════════════════════════════════════════════
+
+// Measure Name: Average Wind Speed
+Average Wind Speed = 
+AVERAGE(City_Wind[avg_wind_speed])
+
+// Measure Name: Maximum Wind Speed
+Maximum Wind Speed = 
+MAX(City_Wind[max_wind_speed])
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// TEXT KPI CALLOUT MEASURES (Non-Scalar TOPN using CONCATENATEX)
+// ═══════════════════════════════════════════════════════════════════════
+
+// Measure Name: Hottest City
+Hottest City = 
+CONCATENATEX(
+    TOPN(
+        1,
+        ALL(City_Temperature[city_name]),
+        CALCULATE(MAX(City_Temperature[max_temperature])),
+        DESC
+    ),
+    City_Temperature[city_name],
+    ", "
+)
+
+// Measure Name: Wettest City
+Wettest City = 
+CONCATENATEX(
+    TOPN(
+        1,
+        ALL(City_Rainfall[city_name]),
+        CALCULATE(SUM(City_Rainfall[total_precipitation])),
+        DESC
+    ),
+    City_Rainfall[city_name],
+    ", "
+)
+
+// Measure Name: Highest Humidity City
+Highest Humidity City = 
+CONCATENATEX(
+    TOPN(
+        1,
+        ALL(City_Humidity[city_name]),
+        CALCULATE(MAX(City_Humidity[avg_humidity])),
+        DESC
+    ),
+    City_Humidity[city_name],
+    ", "
+)
+
+// Measure Name: Windiest City
+Windiest City = 
+CONCATENATEX(
+    TOPN(
+        1,
+        ALL(City_Wind[city_name]),
+        CALCULATE(MAX(City_Wind[avg_wind_speed])),
+        DESC
+    ),
+    City_Wind[city_name],
+    ", "
+)

@@ -1,0 +1,78 @@
+{
+  "name": "WeatherAnalyticsExecutive",
+  "dataColors": [
+    "#1E88E5",
+    "#D81B60",
+    "#FB8C00",
+    "#00897B",
+    "#5E35B1",
+    "#3949AB",
+    "#039BE5",
+    "#43A047"
+  ],
+  "background": "#F8FAFC",
+  "foreground": "#0F172A",
+  "tableAccent": "#1E88E5",
+  "good": "#43A047",
+  "neutral": "#FB8C00",
+  "bad": "#D81B60",
+  "maximum": "#D81B60",
+  "center": "#FDD835",
+  "minimum": "#1E88E5",
+  "null": "#94A3B8",
+  "fontFamily": "Segoe UI",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "outspacePane": [
+          {
+            "backgroundColor": { "solid": { "color": "#F8FAFC" } }
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#E2E8F0" } },
+            "radius": 8
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#000000" } },
+            "transparency": 92,
+            "angle": 90,
+            "distance": 3,
+            "blur": 6
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 12,
+            "color": { "solid": { "color": "#1E293B" } }
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "fontFamily": "Segoe UI Bold",
+            "fontSize": 24,
+            "color": { "solid": { "color": "#0F172A" } }
+          }
+        ],
+        "categoryLabels": [
+          {
+            "fontFamily": "Segoe UI",
+            "fontSize": 10,
+            "color": { "solid": { "color": "#64748B" } }
+          }
+        ]
+      }
+    }
+  }
+}

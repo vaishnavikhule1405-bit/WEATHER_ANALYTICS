@@ -1,0 +1,884 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "Real-Time Kafka Streaming Status & Key Metrics",
+      "type": "row"
+    },
+    {
+      "id": 1,
+      "gridPos": { "h": 3, "w": 4, "x": 0, "y": 1 },
+      "type": "stat",
+      "title": "Kafka Broker Status",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["count"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 2,
+      "gridPos": { "h": 3, "w": 4, "x": 4, "y": 1 },
+      "type": "stat",
+      "title": "Latest Active City",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "purple" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": "/city_name/"
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "value",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 3,
+      "gridPos": { "h": 3, "w": 4, "x": 8, "y": 1 },
+      "type": "stat",
+      "title": "Live Temperature",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "decimals": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "green", "value": 15 },
+              { "color": "orange", "value": 30 },
+              { "color": "red", "value": 38 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": "/temperature_2m/"
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 4,
+      "gridPos": { "h": 3, "w": 4, "x": 12, "y": 1 },
+      "type": "stat",
+      "title": "Live Humidity",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "green", "value": 40 },
+              { "color": "orange", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": "/relative_humidity_2m/"
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 5,
+      "gridPos": { "h": 3, "w": 4, "x": 16, "y": 1 },
+      "type": "stat",
+      "title": "Live Wind Speed",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "velocitykmh",
+          "decimals": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 20 },
+              { "color": "red", "value": 35 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": "/wind_speed_10m/"
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 6,
+      "gridPos": { "h": 3, "w": 4, "x": 20, "y": 1 },
+      "type": "stat",
+      "title": "Live Precipitation",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "lengthmm",
+          "decimals": 2,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "blue", "value": 0.1 },
+              { "color": "orange", "value": 5.0 },
+              { "color": "red", "value": 15.0 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": "/precipitation/"
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 },
+      "id": 101,
+      "title": "Continuous Raw Weather Stream (Topic: weather.raw)",
+      "type": "row"
+    },
+    {
+      "id": 7,
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+      "type": "timeseries",
+      "title": "Live Temperature Stream (°C)",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": ["time", "temperature_2m"]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "showPoints": "always",
+            "pointSize": 5,
+            "spanNulls": true
+          },
+          "color": { "mode": "palette-classic" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "green", "value": 15 },
+              { "color": "orange", "value": 30 },
+              { "color": "red", "value": 38 }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "temperature_2m" },
+            "properties": [
+              { "id": "displayName", "value": "Temperature (°C)" }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["lastNotNull", "max", "min", "mean"]
+        }
+      }
+    },
+    {
+      "id": 8,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 },
+      "type": "timeseries",
+      "title": "Live Humidity & Wind Speed Dynamics",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": ["time", "relative_humidity_2m", "wind_speed_10m"]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "showPoints": "always",
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "relative_humidity_2m" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "displayName", "value": "Humidity (%)" },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "teal" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "wind_speed_10m" },
+            "properties": [
+              { "id": "unit", "value": "velocitykmh" },
+              { "id": "displayName", "value": "Wind Speed (km/h)" },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["lastNotNull", "max", "min"]
+        }
+      }
+    },
+    {
+      "id": 11,
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 13 },
+      "type": "table",
+      "title": "Live Observation Feed (weather.raw)",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.raw",
+          "topicName": "weather.raw",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "time",
+                "city_name",
+                "datetime",
+                "temperature_2m",
+                "relative_humidity_2m",
+                "precipitation",
+                "wind_speed_10m"
+              ]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": { "type": "auto" }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "city_name" },
+            "properties": [
+              { "id": "displayName", "value": "City" },
+              { "id": "custom.width", "value": 130 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "datetime" },
+            "properties": [
+              { "id": "displayName", "value": "Observation Time" },
+              { "id": "custom.width", "value": 160 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "temperature_2m" },
+            "properties": [
+              { "id": "unit", "value": "celsius" },
+              { "id": "displayName", "value": "Temp (°C)" },
+              {
+                "id": "custom.cellOptions",
+                "value": { "type": "color-background", "mode": "gradient" }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "blue", "value": null },
+                    { "color": "green", "value": 18 },
+                    { "color": "orange", "value": 30 },
+                    { "color": "red", "value": 38 }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "relative_humidity_2m" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "displayName", "value": "Humidity (%)" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "precipitation" },
+            "properties": [
+              { "id": "unit", "value": "lengthmm" },
+              { "id": "displayName", "value": "Rain (mm)" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "wind_speed_10m" },
+            "properties": [
+              { "id": "unit", "value": "velocitykmh" },
+              { "id": "displayName", "value": "Wind (km/h)" }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": true, "reducer": ["count"] },
+        "sortBy": [{ "displayName": "Time", "desc": true }]
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "id": 102,
+      "title": "Spark Streaming 5-Minute Windowed Analytics (Topic: weather.analytics)",
+      "type": "row"
+    },
+    {
+      "id": 9,
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 23 },
+      "type": "timeseries",
+      "title": "Windowed Temperature Analytics (Min, Avg, Max °C)",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.analytics",
+          "topicName": "weather.analytics",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": ["time", "min_temperature", "avg_temperature", "max_temperature"]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "showPoints": "always",
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "max_temperature" },
+            "properties": [
+              { "id": "displayName", "value": "Max Temperature" },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "avg_temperature" },
+            "properties": [
+              { "id": "displayName", "value": "Avg Temperature" },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "min_temperature" },
+            "properties": [
+              { "id": "displayName", "value": "Min Temperature" },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["lastNotNull", "max", "min"]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
+      "type": "gauge",
+      "title": "Windowed Rain & Wind Gauge",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.analytics",
+          "topicName": "weather.analytics",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": ["time", "total_precipitation", "avg_wind_speed"]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 20 },
+              { "color": "red", "value": 40 }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "total_precipitation" },
+            "properties": [
+              { "id": "unit", "value": "lengthmm" },
+              { "id": "displayName", "value": "Total Precipitation (mm)" },
+              { "id": "max", "value": 50 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "avg_wind_speed" },
+            "properties": [
+              { "id": "unit", "value": "velocitykmh" },
+              { "id": "displayName", "value": "Avg Wind Speed (km/h)" },
+              { "id": "max", "value": 60 }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 12,
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 31 },
+      "type": "table",
+      "title": "Live Aggregated Analytics Feed (weather.analytics)",
+      "datasource": {
+        "type": "hamedkarbasi93-kafka-datasource",
+        "uid": "kafka-datasource"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "hamedkarbasi93-kafka-datasource",
+            "uid": "kafka-datasource"
+          },
+          "topic": "weather.analytics",
+          "topicName": "weather.analytics",
+          "partition": "all",
+          "messageFormat": "json",
+          "autoOffsetReset": "earliest",
+          "timestampMode": "now"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "time",
+                "city_name",
+                "window_start",
+                "window_end",
+                "avg_temperature",
+                "min_temperature",
+                "max_temperature",
+                "avg_humidity",
+                "total_precipitation",
+                "avg_wind_speed"
+              ]
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": { "type": "auto" }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "city_name" },
+            "properties": [
+              { "id": "displayName", "value": "City" },
+              { "id": "custom.width", "value": 130 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "avg_temperature" },
+            "properties": [
+              { "id": "unit", "value": "celsius" },
+              { "id": "displayName", "value": "Avg Temp (°C)" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "max_temperature" },
+            "properties": [
+              { "id": "unit", "value": "celsius" },
+              { "id": "displayName", "value": "Max Temp" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "min_temperature" },
+            "properties": [
+              { "id": "unit", "value": "celsius" },
+              { "id": "displayName", "value": "Min Temp" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "avg_humidity" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "displayName", "value": "Avg Humidity" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "total_precipitation" },
+            "properties": [
+              { "id": "unit", "value": "lengthmm" },
+              { "id": "displayName", "value": "Total Rain" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "avg_wind_speed" },
+            "properties": [
+              { "id": "unit", "value": "velocitykmh" },
+              { "id": "displayName", "value": "Avg Wind" }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": true, "reducer": ["count"] },
+        "sortBy": [{ "displayName": "Time", "desc": true }]
+      }
+    }
+  ],
+  "refresh": "2s",
+  "schemaVersion": 39,
+  "tags": ["kafka", "weather", "spark", "real-time"],
+  "templating": { "list": [] },
+  "time": { "from": "now-2d", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["1s", "2s", "5s", "10s", "30s", "1m"]
+  },
+  "timezone": "browser",
+  "title": "Indian Cities Weather - Real-Time Kafka Stream",
+  "uid": "kafka-weather-stream",
+  "version": 2
+}

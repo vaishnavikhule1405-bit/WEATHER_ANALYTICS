@@ -1,0 +1,7 @@
+﻿__pycache__/
+*.pyc
+README_antigravity_backup.md
+/target/
+/artifacts/
+/output/streaming/
+/data/hourly_data.csv
