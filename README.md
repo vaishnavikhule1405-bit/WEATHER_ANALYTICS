@@ -35,11 +35,6 @@ If you previously ran a version that wrote one file per city, those old snapshot
 
 Set `WEATHER_STREAM_OUTPUT` to change the snapshot CSV file path. Set `WEATHER_STREAM_CHECKPOINT` to change the checkpoint directory.
 
-If you previously ran a version that wrote one file per city, those old snapshots may still be in `output/streaming/latest/`. They are no longer used; remove that legacy folder after stopping the old streaming job if you want to clear them.
-
-Set `WEATHER_STREAM_OUTPUT` to change the snapshot CSV file path. Set `WEATHER_STREAM_CHECKPOINT` to change the checkpoint directory.
->>>>>>> 494eb012c67aa314f543bac7c562cf03984b6b36
-
 Start Kafka and Grafana (Docker Desktop must be running):
 
 ```powershell

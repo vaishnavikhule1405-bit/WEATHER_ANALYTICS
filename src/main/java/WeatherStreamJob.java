@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -39,10 +40,6 @@ public class WeatherStreamJob {
         outputTopic = setting("KAFKA_OUTPUT_TOPIC", "weather.analytics");
         Path outputPath = Paths.get(setting("WEATHER_STREAM_OUTPUT", "output/streaming/latest.csv"))
                 .toAbsolutePath().normalize();
-=======
-        Path outputPath = Paths.get(setting("WEATHER_STREAM_OUTPUT", "output/streaming/latest.csv"))
-                .toAbsolutePath().normalize();
->>>>>>> 494eb012c67aa314f543bac7c562cf03984b6b36
         Path checkpointDirectory = Paths.get(setting("WEATHER_STREAM_CHECKPOINT", "output/streaming/checkpoint"))
                 .toAbsolutePath().normalize();
 
@@ -154,19 +151,6 @@ public class WeatherStreamJob {
         for (Snapshot snapshot : latestByCity.values()) {
             csv.append(snapshot.csvRow()).append('\n');
         }
-=======
-            Snapshot existing = latestByCity.get(city);
-            Instant end = windowEnd.toInstant();
-            if (existing == null || end.compareTo(existing.windowEnd()) >= 0) {
-                latestByCity.put(city, new Snapshot(end, toCsv(row, city, windowStart, windowEnd)));
-            }
-        }
-
-        StringBuilder csv = new StringBuilder(CSV_HEADER).append('\n');
-        for (Snapshot snapshot : latestByCity.values()) {
-            csv.append(snapshot.csvRow()).append('\n');
-        }
->>>>>>> 494eb012c67aa314f543bac7c562cf03984b6b36
         writeAtomically(outputFile, csv.toString());
         System.out.println("Published latest windows for " + latestByCity.size()
                 + " cities (batch " + batchId + ")");
@@ -185,9 +169,6 @@ public class WeatherStreamJob {
                 + "\"avg_wind_speed\":" + number(row, "avg_wind_speed") + "}";
     }
 
-    private record Snapshot(Instant windowEnd, String csvRow) {}
-
-    private static final String CSV_HEADER =
     private record Snapshot(Instant windowEnd, String csvRow) {}
 
     private static final String CSV_HEADER =
@@ -257,10 +238,6 @@ public class WeatherStreamJob {
         }
         fields.add(field.toString());
         return fields;
-<<<<<<< HEAD
->>>>>>> 494eb012c67aa314f543bac7c562cf03984b6b36
-=======
->>>>>>> 494eb012c67aa314f543bac7c562cf03984b6b36
     }
 
     private static String number(Row row, String field) {
@@ -287,6 +264,13 @@ public class WeatherStreamJob {
                 }
             }
         }
+    }
+
+    private static String escapeJson(String value) {
+        return value.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
     }
 
     private static String escapeCsv(String value) {
